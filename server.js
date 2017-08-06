@@ -1,18 +1,15 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
+const cheerio = require('cheerio');
+const request = require('request');
 
 //serve the files on local server
 app.use(express.static(__dirname + '/'));
 
 app.listen(process.env.PORT || 3000);
 
-// ROUTES MOVE TO ANOTHER FILE
 
-const cheerio = require('cheerio');
-
-const request = require('request');
-
-
+//API route
 
 app.get('/wikiroute', function(req, res){
 
