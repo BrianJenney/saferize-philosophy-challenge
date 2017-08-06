@@ -53,16 +53,22 @@ function getToPhilosophy(url){
   	    	obj.failReason = null;
           res.send(obj);
     			return;
-
   	    }
 
   	  	let text = $('#mw-content-text p');
 
+        if(text.text().length < 1){
+          obj.success = false;
+          obj.loops = 0;
+          obj.path = null;
+          obj.failReason = "Hey, that's not a valid wiki URL. Try https://en.wikipedia.org/wiki/Plato";
+          res.send(obj);
+          return;
+        }
 
   	  	$(text).find('a').each(function() {
 
   		    let link = ($(this).attr('href'));
-
 
   		    //ingore citations, helper articles etc.
   		    if(link !== origUrl && link.indexOf('#cite') < 0 && link.indexOf('Help') < 0 && link.indexOf('wiktionary') < 0 && link.indexOf('ogg') < 0 && link.indexOf('.file') < 0){
