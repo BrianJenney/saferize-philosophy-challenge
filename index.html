@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+
+</head>
+
+<body ng-app="myApp">
+
+	<div ng-controller="myCtrl" ng-cloak>
+
+		<div class="jumbotron text-center">
+			<h1>All Paths Lead to Philosophy(?)</h1>
+		</div>
+
+		<div
+		class="alert alert-info col-md-offset-3 col-md-6"
+		role="alert">
+			<p>
+				<i>A wise bro once said all paths on Wikipedia eventually lead to philosophy. Enter a wiki URL in the search area and see the path towards enlightenment...</i>
+			</p>
+		</div>
+
+		<div class="row">
+		  <div class="col-md-offset-3 col-sm-6">
+		    <div class="input-group">
+		      <input
+					type="text"
+					class="form-control"
+					placeholder="Enter a Wikipedia URL"
+					ng-model="url">
+					<span class="input-group-btn">
+		        <button
+						class="btn btn-secondary btn-primary"
+						type="button"
+						ng-disabled="!url.length"
+						ng-click="getRoute(url)">Philsophize Me!
+					</button>
+		      </span>
+		    </div>
+		  </div>
+		</div>
+
+
+
+
+
+		<div class="container text-center pad-top">
+
+			<div ng-show="loading" class="loader"></div>
+
+			<div
+			class="alert alert-danger col-md-offset-3 col-md-6"
+			role="alert"
+			ng-show="result.failReason.length">
+				<p><b>{{result.failReason}}</b></p>
+				<p ng-if="result.path.length"><b>Path: </b>{{result.path.join("-")}}</p>
+			</div>
+
+			<div
+			class="alert alert-success col-md-offset-3 col-md-6"
+			role="alert"
+			ng-show="result.success">
+				<p><b>No. of Links to Philosophy:</b> {{result.loops}}</p>
+				<p><b>Path: </b> {{result.path.join("-")}}</p>
+			</div>
+		</div>
+
+	</div>
+
+<script src="js/app.js">
+
+</script>
+
+</body>
+</html>
