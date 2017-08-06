@@ -1,16 +1,16 @@
 const express = require('express');
 const app = express();
-const cheerio = require('cheerio');
 const request = require('request');
+const cheerio = require('cheerio');
+
 
 //serve the files on local server
 app.use(express.static(__dirname + '/'));
 
+//dynamic port for heroku deploy
 app.listen(process.env.PORT || 3000);
 
-
-//API route
-
+//api for wikipedia route
 app.get('/wikiroute', function(req, res){
 
 let count = 0; //number of loops
@@ -19,7 +19,7 @@ let visitedLinks = []; //array of links we went to
 
 let obj = {}; //our response object
 
-var wiki = req.query.wiki;
+let wiki = req.query.wiki;
 
 getToPhilosophy(wiki);
 
@@ -65,10 +65,10 @@ function getToPhilosophy(url){
 
 
   		    //ingore citations, helper articles etc.
-  		    if(link !== origUrl && link.indexOf('#cite') < 0 && link.indexOf('Help') < 0 && link.indexOf('wiktionary') < 0){
+  		    if(link !== origUrl && link.indexOf('#cite') < 0 && link.indexOf('Help') < 0 && link.indexOf('wiktionary') < 0 && link.indexOf('ogg') < 0 && link.indexOf('.file') < 0){
 
-  		    	//text surrounding the link -- we will use this to determine
-  		    	//if our link is in parens
+		    	//text surrounding the link -- we will use this to determine
+		    	//if our link is in parens
   				let text = $(this).parent().text();
 
   				//text in anchor tags
@@ -94,9 +94,9 @@ function getToPhilosophy(url){
   					return
   				}
 
-  		    	console.log("LINK: " + link)
+  		    	//console.log("LINK: " + link)
 
-  		    	count++;
+  		    	count++; //increment count after each unsuccessful try
   		    	visitedLinks.push(linkText);
 
   		    	getToPhilosophy("https://en.wikipedia.org" + link);
